@@ -48,7 +48,7 @@ Usage example: `./TinyFastSimulator-Benchmark.sh 32 100000000 results.txt`
 
 ## Benchmark results
 
-The following benchmarks were performed on a system with two CPU of the type AMD Epyc 7281 (Zen+ architecture, 16 physical / 32 logical cores each).
+The following benchmarks were performed on a system with two CPUs of the type AMD Epyc 7281 (Zen+ architecture, 16 physical / 32 logical cores each).
 
 ### No load balancer
 
@@ -61,6 +61,14 @@ The following benchmarks were performed on a system with two CPU of the type AMD
 ![Benchmark - load balancer - absolute performance](images/Benchmark3.png)
 
 ![Benchmark - load balancer - relative performance](images/Benchmark4.png)
+
+### Load balancer + No garbage collection ("epsilon collector")
+
+![Benchmark - load balancer - epsilon collector - absolute performance](images/Benchmark5.png)
+
+![Benchmark - load balancer - epsilon collector - relative performance](images/Benchmark6.png)
+
+(The JVM options `-XX:+UnlockExperimentalVMOptions -XX:+UseEpsilonGC` were used to active the epsilon collector.)
 
 Even so the benchmark probably runs completely from the cache and hardly accesses the RAM, the SMT winnings are nevertheless very high.
 
