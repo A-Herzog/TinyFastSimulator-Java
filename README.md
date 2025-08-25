@@ -42,31 +42,50 @@ The number of threads can be larger than the number of available logical CPU cor
 
 ## Benchmarking script
 
-The `TinyFastSimulator-Benchmark.sh` (no load balancer mode) and the `TinyFastSimulator-Balanced-Benchmark.sh` (load balancer mode) scripts can be used to test the performance in relation to the number of threads. The scripts are to be called with three parameters: the maximum number of threads to be used, the number of arrivals per thread and the output file. The scripts will run the simulator with one threads and the number of arrival specified; then with two threads and the double total number of arrivals etc. until the specified maximum number of threads is reached. For each simulation run one line is added to the specified output file. Each line will have three columns: the number of threads used, the runtime (in seconds) and the used RAM (in KB). To get statistical stable result a number of arrivals of 100,000,000 or higher should be used.
+The `TinyFastSimulator-Benchmark.sh` (no load balancer mode), the `TinyFastSimulator-Balanced-Benchmark.sh` (load balancer mode) and the `TinyFastSimulator-Balanced-Epsilon-Benchmark.sh` (load balancer mode, using epsilon collector instead of G1 collector) scripts can be used to test the performance in relation to the number of threads. The scripts are to be called with three parameters: the maximum number of threads to be used, the number of arrivals per thread and the output file. The scripts will run the simulator with one threads and the number of arrival specified; then with two threads and the double total number of arrivals etc. until the specified maximum number of threads is reached. For each simulation run one line is added to the specified output file. Each line will have three columns: the number of threads used, the runtime (in seconds) and the used RAM (in KB). To get statistical stable result a number of arrivals of 100,000,000 or higher should be used.
 
 Usage example: `./TinyFastSimulator-Benchmark.sh 32 100000000 results.txt`
 
 ## Benchmark results
 
-The following benchmarks were performed on a system with two CPUs of the type AMD Epyc 7281 (Zen+ architecture, 16 physical / 32 logical cores each).
+The following benchmarks were performed on a system with two CPUs of the type AMD Epyc 7281 (Zen+ architecture, 16 physical / 32 logical cores each). The charts are the average values over three simulations runs each.
 
-### No load balancer
+### Java 21, G1 collector, no load balancer
 
-![Benchmark - no load balancer - absolute performance](images/Benchmark1.png)
+![Benchmark - Java 21 - G1 - no load balancer - absolute performance](images/Benchmark-J21-fix-G1-1.png)
 
-![Benchmark - no load balancer - relative performance](images/Benchmark2.png)
+![Benchmark - Java 21 - G1 - no load balancer - relative performance](images/Benchmark-J21-fix-G1-2.png)
 
-### Load balancer
+### Java 21, G1 collector, load balancer
 
-![Benchmark - load balancer - absolute performance](images/Benchmark3.png)
+![Benchmark - Java 21 - G1 - load balancer - absolute performance](images/Benchmark-J21-dyn-G1-1.png)
 
-![Benchmark - load balancer - relative performance](images/Benchmark4.png)
+![Benchmark - Java 21 - G1 - load balancer - relative performance](images/Benchmark-J21-dyn-eps-2.png)
 
-### Load balancer + No garbage collection ("epsilon collector")
+### Java 21- epsilon collector, load balancer
 
-![Benchmark - load balancer - epsilon collector - absolute performance](images/Benchmark5.png)
+![Benchmark - Java 21 - epsilon collector - load balancer - absolute performance](images/Benchmark-J21-dyn-eps-1.png)
 
-![Benchmark - load balancer - epsilon collector - relative performance](images/Benchmark6.png)
+![Benchmark - Java 21 - epsilon collector - load balancer - relative performance](images/Benchmark-J21-dyn-eps-2.png)
+
+### Java 24, G1 collector, no load balancer
+
+![Benchmark - Java 24 - G1 - no load balancer - absolute performance](images/Benchmark-J24-fix-G1-1.png)
+
+![Benchmark - Java 24 - G1 - no load balancer - relative performance](images/Benchmark-J24-fix-G1-2.png)
+
+### Java 24, G1 collector, load balancer
+
+![Benchmark - Java 24 - G1 - load balancer - absolute performance](images/Benchmark-J24-dyn-G1-1.png)
+
+![Benchmark - Java 24 - G1 - load balancer - relative performance](images/Benchmark-J24-dyn-eps-2.png)
+
+### Java 24- epsilon collector, load balancer
+
+![Benchmark - Java 24 - epsilon collector - load balancer - absolute performance](images/Benchmark-J24-dyn-eps-1.png)
+
+![Benchmark - Java 24 - epsilon collector - load balancer - relative performance](images/Benchmark-J24-dyn-eps-2.png)
+
 
 (The JVM options `-XX:+UnlockExperimentalVMOptions -XX:+UseEpsilonGC` were used to active the epsilon collector.)
 

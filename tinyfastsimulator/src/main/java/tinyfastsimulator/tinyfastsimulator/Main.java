@@ -15,6 +15,7 @@
  */
 package tinyfastsimulator.tinyfastsimulator;
 
+import java.io.PrintStream;
 import java.util.Arrays;
 
 import tinyfastsimulator.tinyfastsimulator.simulator.RandomNumbers;
@@ -25,49 +26,50 @@ import tinyfastsimulator.tinyfastsimulator.simulator.RandomNumbers;
 public class Main {
   /**
    * Prints the simulation results.
-   * @param *model  Simulation model
+   * @param out Output stream to write the results to
+   * @param model  Simulation model
    * @param c Number of operators
    * @param threadCount  Number of used threads
    */
-  private static void printResults(final QueueModel model, final int c, final int threadCount) {
-    System.out.println(String.format("Processed events: %gM",model.eventCount/1000000.0));
-    System.out.println(String.format("Simulated service processes: %gM",model.serviceTimeStat.getCount()/1000000.0));
-    System.out.println("");
-    System.out.println(String.format("Average waiting time: E[W]=%g",model.waitingTimeStat.getMean()));
-    System.out.println(String.format("Standard deviation of the waiting times: Std[W]=%g",model.waitingTimeStat.getSD()));
-    System.out.println(String.format("Coefficient of variation of the waiting times CV[W]=%g",model.waitingTimeStat.getCV()));
-    System.out.println(String.format("Minimum waiting time: Min[W]=%g",model.waitingTimeStat.getMin()));
-    System.out.println(String.format("Maximum waiting time: Max[W]=%g",model.waitingTimeStat.getMax()));
-    System.out.println("");
-    System.out.println(String.format("Average service time: E[S]=%g",model.serviceTimeStat.getMean()));
-    System.out.println(String.format("Standard deviation of the service times: Std[S]=%g",model.serviceTimeStat.getSD()));
-    System.out.println(String.format("Coefficient of variation of the service times CV[S]=%g",model.serviceTimeStat.getCV()));
-    System.out.println(String.format("Minimum service time: Min[S]=%g",model.serviceTimeStat.getMin()));
-    System.out.println(String.format("Maximum service time: Max[S]=%g",model.serviceTimeStat.getMax()   ));
-    System.out.println("");
-    System.out.println(String.format("Average residence time: E[V]=%g",model.residenceTimeStat.getMean()));
-    System.out.println(String.format("Standard deviation of the residence times: Std[V]=%g",model.residenceTimeStat.getSD()));
-    System.out.println(String.format("Coefficient of residence of the service times CV[v]=%g",model.residenceTimeStat.getCV()));
-    System.out.println(String.format("Minimum residence time: Min[V]=%g",model.residenceTimeStat.getMin()));
-    System.out.println(String.format("Maximum residence time: Max[V]=%g",model.residenceTimeStat.getMax()));
-    System.out.println("");
-    System.out.println(String.format("Average queue length: E[NQ]=%g",model.queueLength.getMean()));
-    System.out.println(String.format("Minimum queue length: Min[NQ]=%d",model.queueLength.getMin()));
-    System.out.println(String.format("Maximum queue length: Max[NQ]=%d",model.queueLength.getMax()));
-    System.out.println("");
-    System.out.println(String.format("Average number of customers in system: E[N]=%g",model.systemSize.getMean()));
-    System.out.println(String.format("Minimum number of customers in system: Min[N]=%d",model.systemSize.getMin()));
-    System.out.println(String.format("Maximum number of customers in system: Max[N]=%d",model.systemSize.getMax()));
-    System.out.println("");
-    System.out.println(String.format("Average number of busy operators: %g",model.operatorsUsage.getMean()));
-    System.out.println(String.format("Minimum number of busy operators: %d",model.operatorsUsage.getMin()));
-    System.out.println(String.format("Maximum number of busy operators: %d",model.operatorsUsage.getMax()));
-    System.out.println(String.format("Work load rho=%g%%",model.operatorsUsage.getMean()/c*100));
-    System.out.println("");
-    System.out.println(String.format("Wall clock time: %dms",model.runtimeMS));
-    if (threadCount>1) System.out.println(String.format("Number of parallel threads: %d",threadCount));
-    if (model.runtimeMS>0) System.out.println(String.format("Events/second: %gM",model.eventCount*1000/model.runtimeMS/1000000.0));
-    if (threadCount>1 && model.runtimeMS>0) System.out.println(String.format("Events/second/thread: %gM",model.eventCount*1000/model.runtimeMS/1000000.0/threadCount));
+  private static void printResults(final PrintStream out, final QueueModel model, final int c, final int threadCount) {
+    out.println(String.format("Processed events: %gM",model.eventCount/1000000.0));
+    out.println(String.format("Simulated service processes: %gM",model.serviceTimeStat.getCount()/1000000.0));
+    out.println("");
+    out.println(String.format("Average waiting time: E[W]=%g",model.waitingTimeStat.getMean()));
+    out.println(String.format("Standard deviation of the waiting times: Std[W]=%g",model.waitingTimeStat.getSD()));
+    out.println(String.format("Coefficient of variation of the waiting times CV[W]=%g",model.waitingTimeStat.getCV()));
+    out.println(String.format("Minimum waiting time: Min[W]=%g",model.waitingTimeStat.getMin()));
+    out.println(String.format("Maximum waiting time: Max[W]=%g",model.waitingTimeStat.getMax()));
+    out.println("");
+    out.println(String.format("Average service time: E[S]=%g",model.serviceTimeStat.getMean()));
+    out.println(String.format("Standard deviation of the service times: Std[S]=%g",model.serviceTimeStat.getSD()));
+    out.println(String.format("Coefficient of variation of the service times CV[S]=%g",model.serviceTimeStat.getCV()));
+    out.println(String.format("Minimum service time: Min[S]=%g",model.serviceTimeStat.getMin()));
+    out.println(String.format("Maximum service time: Max[S]=%g",model.serviceTimeStat.getMax()   ));
+    out.println("");
+    out.println(String.format("Average residence time: E[V]=%g",model.residenceTimeStat.getMean()));
+    out.println(String.format("Standard deviation of the residence times: Std[V]=%g",model.residenceTimeStat.getSD()));
+    out.println(String.format("Coefficient of residence of the service times CV[v]=%g",model.residenceTimeStat.getCV()));
+    out.println(String.format("Minimum residence time: Min[V]=%g",model.residenceTimeStat.getMin()));
+    out.println(String.format("Maximum residence time: Max[V]=%g",model.residenceTimeStat.getMax()));
+    out.println("");
+    out.println(String.format("Average queue length: E[NQ]=%g",model.queueLength.getMean()));
+    out.println(String.format("Minimum queue length: Min[NQ]=%d",model.queueLength.getMin()));
+    out.println(String.format("Maximum queue length: Max[NQ]=%d",model.queueLength.getMax()));
+    out.println("");
+    out.println(String.format("Average number of customers in system: E[N]=%g",model.systemSize.getMean()));
+    out.println(String.format("Minimum number of customers in system: Min[N]=%d",model.systemSize.getMin()));
+    out.println(String.format("Maximum number of customers in system: Max[N]=%d",model.systemSize.getMax()));
+    out.println("");
+    out.println(String.format("Average number of busy operators: %g",model.operatorsUsage.getMean()));
+    out.println(String.format("Minimum number of busy operators: %d",model.operatorsUsage.getMin()));
+    out.println(String.format("Maximum number of busy operators: %d",model.operatorsUsage.getMax()));
+    out.println(String.format("Work load rho=%g%%",model.operatorsUsage.getMean()/c*100));
+    out.println("");
+    out.println(String.format("Wall clock time: %dms",model.runtimeMS));
+    if (threadCount>1) out.println(String.format("Number of parallel threads: %d",threadCount));
+    if (model.runtimeMS>0) out.println(String.format("Events/second: %gM",model.eventCount*1000/model.runtimeMS/1000000.0));
+    if (threadCount>1 && model.runtimeMS>0) out.println(String.format("Events/second/thread: %gM",model.eventCount*1000/model.runtimeMS/1000000.0/threadCount));
   }
 
   /**
@@ -118,9 +120,11 @@ public class Main {
     /* Run simulation threads */
     final Thread[] threads=new Thread[parameters.threadCount];
     for (int i=0;i<threads.length;i++) {
-        queueModels[i]=new QueueModel(queueModels[i]); /* Make memory allocations from within the thread. - Very important on NUMA systems.  */
-        final QueueModel model=queueModels[i];
-        threads[i]=new Thread(()->model.run());
+        final int nr=i;
+        threads[i]=new Thread(()->{
+          queueModels[nr]=new QueueModel(queueModels[nr]); /* Make memory allocations from within the thread. - Very important on NUMA systems.  */
+          queueModels[nr].run();
+        });
         threads[i].start();
     }
     try {
@@ -130,7 +134,7 @@ public class Main {
     /* Print results */
     QueueModel joinedModel=queueModels[0];
     for (int i=1;i<queueModels.length;i++) joinedModel=QueueModel.join(joinedModel,queueModels[i]);
-    printResults(joinedModel,parameters.c,parameters.threadCount);
+    printResults(System.out,joinedModel,parameters.c,parameters.threadCount);
 
     if (parameters.showTimes) {
       System.out.println("");
