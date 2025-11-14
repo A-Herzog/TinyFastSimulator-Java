@@ -12,7 +12,7 @@ then
 	echo "1. Maximum number of threads"
 	echo "2. Number of arrivals (in single thread mode) to be simulated"
 	echo "3. Output file for the results"
-	echo "Example: ./TinyFastSimulator-Benchmark.sh 32 100000000 results.txt"
+	echo "Example: ./TinyFastSimulator-Balanced-Epsilon-Benchmark.sh 32 100000000 results.txt"
 	exit 1
 fi
 
